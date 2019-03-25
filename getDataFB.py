@@ -9,6 +9,7 @@ import  pymongo
 from pymongo import MongoClient
 import pprint
 from pymongo import MongoClient
+import sentiment_script as ss
 
 start = time.time()
 client = MongoClient('mongodb://localhost:27017/')
@@ -55,9 +56,11 @@ def findPost(database,collectionC,collectionP):
                          valId = c["id"]
                          print(c["id"])
                      #print(idCli)
+                     sentimentvalue = ss.sentimentDefine(value)
                      data = {"Id": str(j),
                              "IdClient": valId,
-                             "postLinkedToClient": value}
+                             "postLinkedToClient": value,
+                             "sentiment": sentimentvalue}
                      get_dataFB.insert_one(data)
                      j += 1 
                  else : 
